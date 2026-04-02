@@ -31,11 +31,11 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href=""
+                href="#"
                 className="text-neutral-500 hover:text-purple-500 transition-colors"
               >
                 <svg
-                  xmlns="http://www/w3.org/2000/svg"
+                  xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
                   fill="currentColor"
                   viewBox="0 0 24 24"
@@ -151,6 +151,7 @@ const Footer = () => {
                 />
               </div>
               <button
+                type="submit"
                 className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg 
               transition-all text-sm"
               >
@@ -171,7 +172,7 @@ const Footer = () => {
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0 text-xs">
             <a
-              href="Privacy Policy"
+              href="/Privacy-Policy"
               className="hover:text-purple-400 transition-all"
             >
               Privacy Policy

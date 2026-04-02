@@ -41,7 +41,7 @@ export const MoviesProvider = ({ children }) => {
   }, []);
 
   const openMoviesDetails = (moviesId) => {
-    selectedMovieId(moviesId);
+    setSelectedMovieId(moviesId);
     document.body.style.overflow = "hidden";
   };
 
@@ -61,6 +61,7 @@ export const MoviesProvider = ({ children }) => {
         error,
         setError,
         selectedMovieId,
+        setSelectedMovieId,
         openMoviesDetails,
         closeMovieDetails,
       }}

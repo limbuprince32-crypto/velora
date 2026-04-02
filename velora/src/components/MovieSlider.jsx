@@ -28,11 +28,13 @@ const MovieSlider = ({ title, movies, subtitle = "" }) => {
   };
 
   const formatRating = (rating) => {
+    if (!rating) return "0.0";
     return (Math.round(rating * 10) / 10).toFixed(1);
   };
 
   const handleMovieClick = (moviesId) => {
     openMoviesDetails(moviesId);
+    console.log("working");
   };
 
   if (!movies || movies.length === 0) {
@@ -103,7 +105,7 @@ const MovieSlider = ({ title, movies, subtitle = "" }) => {
                 <div
                   className="min-w-50 md:min-w-60 snap-start relative group cursor-pointer"
                   key={movie.id}
-                  onMouseEnter={() => setIsHoveredMoviesId(movie.Id)}
+                  onMouseEnter={() => setIsHoveredMoviesId(movie.id)}
                   onMouseLeave={() => setIsHoveredMoviesId(null)}
                   onClick={() => handleMovieClick(movie.id)}
                 >
@@ -145,6 +147,10 @@ const MovieSlider = ({ title, movies, subtitle = "" }) => {
                             </span>
                           </div>
                           <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleMovieClick(movie.id);
+                            }}
                             className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 
                       rounded-md flex items-center justify-center gap-1 transition-all text-sm"
                           >
@@ -168,7 +174,7 @@ const MovieSlider = ({ title, movies, subtitle = "" }) => {
                     </div>
                   </div>
                   <div className="mt-3">
-                    <h3 className="text-whtie text-semibold font-medium truncate">
+                    <h3 className="text-white text-semibold font-medium truncate">
                       {movie.title}
                     </h3>
                     <div className="flex items-center justify-between">

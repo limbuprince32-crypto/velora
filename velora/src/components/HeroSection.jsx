@@ -75,7 +75,7 @@ const HeroSection = () => {
               {currentMovie.adult && (
                 <>
                   <span className="text-neutral-400">.</span>
-                  <span className="bg-neutral-700 text-neutral-300 text-xs px-11.5 py-0.5">
+                  <span className="bg-neutral-700 text-neutral-300 text-xs px-3 py-0.5">
                     18+
                   </span>
                 </>
@@ -93,6 +93,7 @@ const HeroSection = () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <button
+                onClick={() => openMoviesDetails(currentMovie.id)}
                 className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg 
                 flex items-center gap-2 transition-all"
               >

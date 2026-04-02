@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
+import { getImageURl, searchMovies } from "../services/api";
+import { useMovies } from "../context/MovieContext";
 const Navbar = () => {
+  const { openMoviesDetails } = useMovies();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,6 +17,57 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (searchQuery.trim().length > 2) {
+        setIsSearching(true);
+        try {
+          const result = await searchMovies(searchQuery);
+          setSearchResult(result ? result.slice(0, 5) : []);
+        } catch (err) {
+          console.error("Error Searching Movies", err);
+        } finally {
+          setIsSearching(false);
+          setShowSearchResults(true);
+        }
+      } else {
+        setSearchResult([]);
+        setShowSearchResults(false);
+      }
+    };
+    const deBounceTimer = setTimeout(() => {
+      handleSearch();
+    }, 500);
+    return () => {
+      clearTimeout(deBounceTimer);
+    };
+  }, [searchQuery]);
+
+  const handleSearchFocus = () => {
+    if (searchQuery.trim().length > 2 && searchResult.length > 0) {
+      setShowSearchResults(true);
+    }
+  };
+  const handleClickOutside = (e) => {
+    if (
+      searchContainerRef.current &&
+      !searchContainerRef.current.contains(e.target)
+    ) {
+      setShowSearchResults(false);
+    }
+  };
+  const handleMovieSelect = (movieId) => {
+    openMoviesDetails(movieId);
+    setShowSearchResults(false);
+    setSearchQuery("");
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
   return (
     <header
@@ -65,9 +119,12 @@ const Navbar = () => {
             <div className="relative">
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={handleSearchFocus}
                 placeholder="Search Movies..."
                 className="bg-neutral-800/80 text-white px-4 py-2 rounded-full text-sm w-48 
-                focus:w-64 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/5-"
+                focus:w-64 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
               />
               {isSearching ? (
                 <div className="absolute right-3 top-2.5">
@@ -110,38 +167,45 @@ const Navbar = () => {
                 </svg>
               )}
             </div>
-            {showSearchResults &&
-              searchResult &&
-              searchResult.length >
-                0(
-                  <div className="absolute mt-2 w-72 bg-neutral-800 rounded-lg shadow-lg overflow-hidden z-50">
-                    <ul className="divide-y divide-neutral-700">
+            {showSearchResults && searchResult && searchResult.length > 0 && (
+              <div className="absolute mt-2 w-72 bg-neutral-800 rounded-lg shadow-lg overflow-hidden z-50">
+                <ul className="divide-y divide-neutral-700">
+                  {searchResult.map((movie) => {
+                    return (
                       <li className="hover:bg-neutral-700">
-                        <button className="flex items-center p-3 w-full text-left">
+                        <button
+                          className="flex items-center p-3 w-full text-left"
+                          onClick={() => handleMovieSelect(movie.id)}
+                        >
                           <div className="w-10 h-10 bg-neutral-700 rounded overflow-hidden shrink-0">
-                            <img
-                              src=""
-                              alt=""
-                              className="w-full h-full object-cover"
-                            />
-                            <div className="w-full h-full flex items-center justify-center text-neutral-500 text-xs">
-                              {""}
-                              No Image
-                            </div>
+                            {movie.poster_path ? (
+                              <img
+                                src={getImageURl(movie.poster_path, "w92")}
+                                alt=""
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-neutral-500 text-xs">
+                                {""}
+                                No Image
+                              </div>
+                            )}
                           </div>
                           <div className="ml-3 flex-1">
                             <p className="text-sm font-medium text-white truncate">
-                              Movie Title
+                              {movie.title}
                             </p>
                             <p className="text-xs text-neutral-400">
-                              Movies Release Date
+                              {movie.release_date?.split("-")[0] || "N/A"}
                             </p>
                           </div>
                         </button>
                       </li>
-                    </ul>
-                  </div>,
-                )}
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
             {showSearchResults &&
               searchQuery.trim().length > 2 &&
               (!searchResult || searchResult.length === 0) &&
@@ -191,7 +255,7 @@ const Navbar = () => {
           </button>
         </div>
         {isMobileMenuOpen && (
-          <div className="mt-4 pb-4 space-y-4 md:hidden">
+          <div className="fixed w-full h-screen mt-4 pb-4 space-y-4 md:hidden">
             <a
               href="#"
               className="block text-white hover:text-purple-400 transition-colors py-2"
@@ -200,25 +264,31 @@ const Navbar = () => {
             </a>
             <a
               href="#trending"
-              className="text-white hover:text-purple-400 transition-all font-medium"
+              className="block text-white hover:text-purple-400 transition-all font-medium"
             >
               Trending
             </a>
             <a
               href="#popular"
-              className="text-white hover:text-purple-400 transition-all font-medium"
+              className="block text-white hover:text-purple-400 transition-all font-medium"
             >
               Popular
             </a>
             <a
               href="#top-rated"
-              className="text-white hover:text-purple-400 transition-all font-medium"
+              className="block text-white hover:text-purple-400 transition-all font-medium"
             >
               Top Rated
             </a>
-            <div className="relative mt-3 search-container">
+            <div
+              className="relative mt-3 search-container"
+              ref={searchContainerRef}
+            >
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={handleSearchFocus}
                 placeholder="Search Movies..."
                 className="bg-neutral-800/80 text-white px-4 py-2 rounded-full text-sm w-48 
                 focus:w-64 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
