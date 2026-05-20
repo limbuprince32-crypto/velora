@@ -1,5 +1,3 @@
-import React from "react";
-
 const Footer = () => {
   return (
     <footer className="bg-neutral-900 text-neutral-400 border-t border-neutral-800">
@@ -8,7 +6,7 @@ const Footer = () => {
           <div>
             <a href="/" className="inline-block mb-6">
               <span className="text-purple-500 font-bold text-2xl">
-                V<span className="text-white">elora</span>
+                A<span className="text-white">EON</span>
               </span>
             </a>
             <p className="mb-4 text-sm italic font-sans">
@@ -162,7 +160,7 @@ const Footer = () => {
         </div>
         <div className="border-t border-neutral-800 mt-10 pt-6 flex flex-col md:flex-row justify-between">
           <p className="text-xs">
-            &copy; Velora , All rights reserved
+            &copy; AEON , All rights reserved
             <br className="md:hidden" />
             <span className="hidden md:inline">.</span>
             Powered by{" "}

@@ -74,7 +74,7 @@ const MovieDetails = ({ movieId, onClose }) => {
           <div className="flex items-center justify-center h-96">
             <div className="animate-pulse">
               <div className="w-16 h-16 border border-purple-500 border-t-transparent rounded-full">
-                <p>Loading Details......</p>
+                <p>Loading Movie Details......</p>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@ const MovieDetails = ({ movieId, onClose }) => {
               <div className="absolute inset-0 bg-linear-to-t from-neutral-800 via-neutral-800/70 to-transparent"></div>
             </div>
             <div className="p-6 md:p-8">
-              <div className="md:flex gap-8 -mt-32 md:-mt-48 relative">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 relative -mt-20 md:-mt-40">
                 <div className="w-32 md:w-64 shrink-0 mb-4 md:mb-0">
                   <div className="rounded-lg overflow-hidden shadow-lg border border-neutral-700">
                     {movie.poster_path ? (
@@ -345,7 +345,7 @@ const MovieDetails = ({ movieId, onClose }) => {
                           className="w-24 h-24 rounded-full border-4 border-purple-500 flex 
                         items-center justify-center mr-4"
                         >
-                          <span className="text-3xl font-bold">
+                          <span className="text-2xl font-bold">
                             {formatRating(movie.vote_average)}
                           </span>
                         </div>

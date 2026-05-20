@@ -78,6 +78,7 @@ const GenreSection = () => {
             {genreMovies.map((movie) => {
               return (
                 <div
+                  key={movie.id}
                   className="group cursor-pointer"
                   onClick={() => openMoviesDetails(movie.id)}
                 >

@@ -82,14 +82,14 @@ const Navbar = () => {
           <div className="flex items-center">
             <a href="\" className="flex items-center">
               <span className="text-purple-500 font-bold text-3xl">
-                V<span className="text-white">elora</span>
+                A<span className="text-white">EON</span>
               </span>
             </a>
           </div>
           <nav className="hidden md:flex space-x-8">
             <a
               href="#"
-              className="text-white hover:text-purple-400 transition-all font-medium"
+              className="text-purple-600 hover:text-purple-400 transition-all font-medium"
             >
               Home
             </a>
