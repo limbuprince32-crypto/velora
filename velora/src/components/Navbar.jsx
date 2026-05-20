@@ -80,9 +80,9 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <a href="\" className="flex items-center">
+            <a href="/" className="flex items-center">
               <span className="text-purple-500 font-bold text-3xl">
-                A<span className="text-white">EON</span>
+                N<span className="text-white">EON</span>
               </span>
             </a>
           </div>

@@ -6,7 +6,7 @@ const Footer = () => {
           <div>
             <a href="/" className="inline-block mb-6">
               <span className="text-purple-500 font-bold text-2xl">
-                A<span className="text-white">EON</span>
+                N<span className="text-white">EON</span>
               </span>
             </a>
             <p className="mb-4 text-sm italic font-sans">
@@ -160,11 +160,14 @@ const Footer = () => {
         </div>
         <div className="border-t border-neutral-800 mt-10 pt-6 flex flex-col md:flex-row justify-between">
           <p className="text-xs">
-            &copy; AEON , All rights reserved
+            &copy; NEON , All rights reserved
             <br className="md:hidden" />
             <span className="hidden md:inline">.</span>
             Powered by{" "}
-            <a href="#" className="text-purple-400 hover:text-purple-300">
+            <a
+              href="https://themoviedb.org/docs/"
+              className="text-purple-400 hover:text-purple-300"
+            >
               TMDB API
             </a>
           </p>
@@ -176,13 +179,13 @@ const Footer = () => {
               Privacy Policy
             </a>
             <a
-              href="Privacy Policy"
+              href="/terms-of-service"
               className="hover:text-purple-400 transition-all"
             >
               Terms of Services
             </a>
             <a
-              href="Privacy Policy"
+              href="/cookie-policy"
               className="hover:text-purple-400 transition-all"
             >
               Cookie Policy
